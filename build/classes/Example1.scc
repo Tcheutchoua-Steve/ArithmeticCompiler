@@ -1,0 +1,25 @@
+/* 
+	filename   : Example1.ssc
+	created on : Jun 28, 2018
+	description:
+*/
+
+/* define package-prefix */
+Package fet.compiler;
+
+/* define token */
+Tokens
+	ident = 'x';
+	lpar = '(';
+	rpar = ')';
+	comma = ',';
+
+Productions
+	s
+		= {axiom} lpar l rpar
+		|{id} ident;  // name in { } is optional. It is the name of the node in the tree
+		
+	l
+		= {l} l comma s
+		| {s} s ;
+		

@@ -1,0 +1,40 @@
+/* 
+	filename   : Calc.ssc
+	created on : Jun 28, 2018
+	description:
+*/
+
+/* define package-prefix */
+Package fet.calc;
+
+/* define token */
+Tokens
+	
+	plus = '+';
+	minus = '-';
+	mult = '*';
+	div = '/';
+	l_par = '(';
+	r_par = ')';
+	blank = (' ' | 13 | 10)+;
+        number = ['0' .. '9']+;
+        id = ['a' .. 'z']+ | ['A' .. 'Z']+;
+/* Token to be ignored */
+Ignored Tokens
+	blank;
+
+Productions
+	expre
+		= {term} term
+		| {plus} expre plus term // generates APlusExpre with children as expre and term 
+		| {minus} expre minus term; //generates AMinusExre with children as expre and term
+	term
+		= {factor} factor  // generates AFactorTerm with child as factor
+		| {mult} term mult factor // generates AMultTerm with children as term and factor
+		| {div} term div factor; // generates ADivTerm with children as term and factor
+		
+
+	factor
+		= {number} number
+                | {id} id
+		| {expre} l_par expre r_par;
